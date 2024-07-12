@@ -2,10 +2,6 @@ name: Patch and Upload
 
 on:
   workflow_dispatch:
-    inputs:
-      INFINITY_VERSION:
-        description: "INFINITY_VERSION"
-        required: true
 
 jobs:
   fetch-and-patch:
@@ -19,12 +15,10 @@ jobs:
         run: |
           chmod +x patch.sh
           ./patch.sh
-        env:
-          INFINITY_VERSION: ${{ github.event.inputs.INFINITY_VERSION }}
 
       - name: Upload artifact
         if: success()
         uses: actions/upload-artifact@v4
         with:
-          name: Re-Infinity-${{ env.INFINITY_VERSION }}
-          path: ./Re-Infinity-${{ env.INFINITY_VERSION }}.apk
+          name: Re-Infinity-"$INFINITY_VERSION"
+          path: ./Re-Infinity-"$INFINITY_VERSION".apk
