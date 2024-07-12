@@ -2,6 +2,10 @@ name: Patch and Upload
 
 on:
   workflow_dispatch:
+    inputs:
+      INFINITY_VERSION:
+        description: "INFINITY_VERSION"
+        required: true
 
 jobs:
   fetch-and-patch:
@@ -16,10 +20,7 @@ jobs:
           chmod +x patch.sh
           ./patch.sh
         env:
-          INFINITY_VERSION: ${{ env.INFINITY_VERSION }}
-
-      - name: Debug INFINITY_VERSION
-        run: echo "INFINITY_VERSION is ${{ env.INFINITY_VERSION }}"
+          INFINITY_VERSION: ${{ github.event.inputs.INFINITY_VERSION }}
 
       - name: Upload artifact
         if: success()
