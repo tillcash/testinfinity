@@ -35,6 +35,8 @@ curl -o "revanced-patches.jar" "${BASE_URL}${REPO_PATCHES}/releases/download/${P
 curl -o "revanced-integrations.apk" "${BASE_URL}${REPO_INTEGRATIONS}/releases/download/${INTEGRATIONS_VERSION}/revanced-integrations-${INTEGRATIONS_VERSION#v}.apk"
 curl -o "infinity.apk" "${BASE_URL}${REPO_INFINITY}/releases/download/${INFINITY_VERSION}/Infinity-${INFINITY_VERSION}.apk"
 
+ls -lh
+
 echo "Patch with ReVanced"
 java -jar revanced-cli.jar patch \
     -b revanced-patches.jar \
