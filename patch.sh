@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# set -e  # Exit script immediately if any command exits with a non-zero status
+set -e  # Exit script immediately if any command exits with a non-zero status
 
 # Base URLs for GitHub and GitHub API
 BASE_URL="https://github.com/"
@@ -18,7 +18,7 @@ get_latest_version() {
     curl "${API_BASE_URL}${repo}/releases/latest" | jq -r '.tag_name'
 }
 
-echo "Fetch latest versions from respective repositories"
+# "Fetch latest versions from respective repositories"
 CLI_VERSION=$(get_latest_version "$REPO_CLI")
 PATCHES_VERSION=$(get_latest_version "$REPO_PATCHES")
 INTEGRATIONS_VERSION=$(get_latest_version "$REPO_INTEGRATIONS")
@@ -29,15 +29,15 @@ if [[ "${INFINITY_VERSION}" == "v7.2.9" ]]; then
     INFINITY_VERSION="v7.2.8"
 fi
 
-echo "Download artifacts from GitHub releases"
-curl -o "revanced-cli.jar" "${BASE_URL}${REPO_CLI}/releases/download/${CLI_VERSION}/revanced-cli-${CLI_VERSION#v}-all.jar"
-curl -o "revanced-patches.jar" "${BASE_URL}${REPO_PATCHES}/releases/download/${PATCHES_VERSION}/revanced-patches-${PATCHES_VERSION#v}.jar"
-curl -o "revanced-integrations.apk" "${BASE_URL}${REPO_INTEGRATIONS}/releases/download/${INTEGRATIONS_VERSION}/revanced-integrations-${INTEGRATIONS_VERSION#v}.apk"
-curl -o "infinity.apk" "${BASE_URL}${REPO_INFINITY}/releases/download/${INFINITY_VERSION}/Infinity-${INFINITY_VERSION}.apk"
+# Download artifacts from GitHub releases
+curl -sLo "revanced-cli.jar" "${BASE_URL}${REPO_CLI}/releases/download/${CLI_VERSION}/revanced-cli-${CLI_VERSION#v}-all.jar"
+curl -sLo "revanced-patches.jar" "${BASE_URL}${REPO_PATCHES}/releases/download/${PATCHES_VERSION}/revanced-patches-${PATCHES_VERSION#v}.jar"
+curl -sLo "revanced-integrations.apk" "${BASE_URL}${REPO_INTEGRATIONS}/releases/download/${INTEGRATIONS_VERSION}/revanced-integrations-${INTEGRATIONS_VERSION#v}.apk"
+curl -sLo "infinity.apk" "${BASE_URL}${REPO_INFINITY}/releases/download/${INFINITY_VERSION}/Infinity-${INFINITY_VERSION}.apk"
 
 ls -lh
 
-echo "Patch with ReVanced"
+# Patch with ReVanced CLI
 java -jar revanced-cli.jar patch \
     -b revanced-patches.jar \
     -m revanced-integrations.apk \
