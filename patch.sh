@@ -35,8 +35,6 @@ curl -sLo "revanced-patches.jar" "${BASE_URL}${REPO_PATCHES}/releases/download/$
 curl -sLo "revanced-integrations.apk" "${BASE_URL}${REPO_INTEGRATIONS}/releases/download/${INTEGRATIONS_VERSION}/revanced-integrations-${INTEGRATIONS_VERSION#v}.apk"
 curl -sLo "infinity.apk" "${BASE_URL}${REPO_INFINITY}/releases/download/${INFINITY_VERSION}/Infinity-${INFINITY_VERSION}.apk"
 
-ls -lh
-
 # Patch with ReVanced CLI
 java -jar revanced-cli.jar patch \
     -b revanced-patches.jar \
@@ -51,7 +49,7 @@ if [ $? -ne 0 ]; then
     echo "Error: Patching failed."
     exit 1
 fi
-
+ls -lh
 # Optionally, perform additional checks or actions here
 
 # Exit script successfully
