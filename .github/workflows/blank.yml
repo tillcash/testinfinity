@@ -18,9 +18,12 @@ jobs:
         env:
           INFINITY_VERSION: ${{ env.INFINITY_VERSION }}
 
+      - name: Debug INFINITY_VERSION
+        run: echo "INFINITY_VERSION is ${{ env.INFINITY_VERSION }}"
+
       - name: Upload artifact
         if: success()
         uses: actions/upload-artifact@v4
         with:
           name: Re-Infinity-${{ env.INFINITY_VERSION }}
-          path: Re-Infinity-${{ env.INFINITY_VERSION }}.apk
+          path: ./Re-Infinity-${{ env.INFINITY_VERSION }}.apk
