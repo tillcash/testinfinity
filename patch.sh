@@ -18,7 +18,7 @@ get_latest_version() {
     curl "${API_BASE_URL}${repo}/releases/latest" | jq -r '.tag_name'
 }
 
-# Fetch latest versions from respective repositories
+echo "Fetch latest versions from respective repositories"
 CLI_VERSION=$(get_latest_version "$REPO_CLI")
 PATCHES_VERSION=$(get_latest_version "$REPO_PATCHES")
 INTEGRATIONS_VERSION=$(get_latest_version "$REPO_INTEGRATIONS")
@@ -29,13 +29,13 @@ if [[ "${INFINITY_VERSION}" == "v7.2.9" ]]; then
     INFINITY_VERSION="v7.2.8"
 fi
 
-# Download artifacts from GitHub releases
+echo "Download artifacts from GitHub releases"
 curl -o "revanced-cli.jar" "${BASE_URL}${REPO_CLI}/releases/download/${CLI_VERSION}/revanced-cli-${CLI_VERSION#v}-all.jar"
 curl -o "revanced-patches.jar" "${BASE_URL}${REPO_PATCHES}/releases/download/${PATCHES_VERSION}/revanced-patches-${PATCHES_VERSION#v}.jar"
 curl -o "revanced-integrations.apk" "${BASE_URL}${REPO_INTEGRATIONS}/releases/download/${INTEGRATIONS_VERSION}/revanced-integrations-${INTEGRATIONS_VERSION#v}.apk"
 curl -o "infinity.apk" "${BASE_URL}${REPO_INFINITY}/releases/download/${INFINITY_VERSION}/Infinity-${INFINITY_VERSION}.apk"
 
-# Patch with ReVanced
+echo "Patch with ReVanced"
 java -jar revanced-cli.jar patch \
     -b revanced-patches.jar \
     -m revanced-integrations.apk \
