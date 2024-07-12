@@ -20,4 +20,5 @@ jobs:
         if: success()
         uses: softprops/action-gh-release@v2
         with:
+          tag_name: ${{ env.INFINITY_VERSION }}
           files: Re-Infinity-${{ env.INFINITY_VERSION }}.apk
