@@ -16,9 +16,27 @@ jobs:
           chmod +x patch.sh
           ./patch.sh
 
-      - name: Release
+      - name: Create Release
+        id: create_release
+        run: |
+          RESPONSE=$(curl -sSL \
+            -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+            -H "Content-Type: application/json" \
+            -X POST \
+            -d '{"tag_name": "v${{ env.INFINITY_VERSION }}", "name": "Re-Infinity-${{ env.INFINITY_VERSION }}", "draft": false, "prerelease": false}' \
+            https://api.github.com/repos/${{ github.repository }}/releases)
+          echo "::set-output name=response::$RESPONSE"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Upload Release Asset
         if: success()
-        uses: softprops/action-gh-release@v2
-        with:
-          name: Re-Infinity-${{ env.INFINITY_VERSION }}
-          files: Re-Infinity-${{ env.INFINITY_VERSION }}.apk
+        run: |
+          UPLOAD_URL=$(echo ${{ steps.create_release.outputs.response }} | jq -r '.upload_url' | sed 's/{?name,label}//')
+          curl -sSL \
+            -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+            -H "Content-Type: application/zip" \
+            --data-binary @Re-Infinity-${{ env.INFINITY_VERSION }}.apk \
+            "$UPLOAD_URL?name=Re-Infinity-${{ env.INFINITY_VERSION }}.apk"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
