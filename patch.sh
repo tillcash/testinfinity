@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -e  # Exit script immediately if any command exits with a non-zero status
+# set -e  # Exit script immediately if any command exits with a non-zero status
 
 # Base URLs for GitHub and GitHub API
 BASE_URL="https://github.com/"
