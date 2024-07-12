@@ -17,7 +17,7 @@ jobs:
           ./patch.sh
 
       - name: Release
-        if: sucess()
+        if: success()
         uses: softprops/action-gh-release@v2
         with:
           files: Re-Infinity-${{ env.INFINITY_VERSION }}.apk
