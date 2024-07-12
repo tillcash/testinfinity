@@ -20,5 +20,5 @@ jobs:
         if: success()
         uses: actions/upload-artifact@v4
         with:
-          name: Re-Infinity-"$INFINITY_VERSION"
-          path: ./Re-Infinity-"$INFINITY_VERSION".apk
+          name: Re-Infinity-${{ env.INFINITY_VERSION }}
+          path: ./Re-Infinity-${{ env.INFINITY_VERSION }}.apk
