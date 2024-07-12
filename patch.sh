@@ -49,8 +49,8 @@ if [ $? -ne 0 ]; then
     echo "Error: Patching failed."
     exit 1
 fi
-ls -lh
-# Optionally, perform additional checks or actions here
+
+echo "INFINITY_VERSION=${INFINITY_VERSION}" >> "$GITHUB_ENV"
 
 # Exit script successfully
 exit 0
