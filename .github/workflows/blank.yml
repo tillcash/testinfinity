@@ -1,0 +1,26 @@
+name: Patch and Upload
+
+on:
+  workflow_dispatch:
+
+jobs:
+  fetch-and-patch:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Execute patching script
+        run: |
+          chmod +x patch.sh
+          ./patch.sh
+        env:
+          INFINITY_VERSION: ${{ env.INFINITY_VERSION }}
+
+      - name: Upload artifact
+        if: success()
+        uses: actions/upload-artifact@v4
+        with:
+          name: Re-Infinity-${{ env.INFINITY_VERSION }}
+          path: Re-Infinity-${{ env.INFINITY_VERSION }}.apk
