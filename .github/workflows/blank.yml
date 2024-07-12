@@ -16,21 +16,8 @@ jobs:
           chmod +x patch.sh
           ./patch.sh
 
-      - name: Create GitHub Release
-        run: |
-          gh api \
-            --method POST \
-            -H "Accept: application/vnd.github.v3+json" \
-            -H "X-GitHub-Api-Version: 2022-11-28" \
-            /repos/${{ github.repository }}/releases \
-            -f "tag_name=v${{ env.INFINITY_VERSION }}" \
-            -f "target_commitish=master" \
-            -f "name=Re-Infinity-${{ env.INFINITY_VERSION }}" \
-            -f "body=Release notes for Re-Infinity version ${{ env.INFINITY_VERSION }}" \
-            -f "draft=false" \
-            -f "prerelease=false"
-
-      - name: Upload Release Asset
-        run: |
-          gh release upload v${{ env.INFINITY_VERSION }} Re-Infinity-${{ env.INFINITY_VERSION }}.apk \
-            --repo ${{ github.repository }}
+      - name: Release
+        if: sucess()
+        uses: softprops/action-gh-release@v2
+        with:
+          files: Re-Infinity-${{ env.INFINITY_VERSION }}.apk
